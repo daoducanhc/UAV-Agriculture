@@ -84,7 +84,7 @@ class ResUNet(nn.Module):
 def test():
     FILTER_LIST = [16,32,64,128,256]
     x = torch.rand((2, 3, 512, 512))
-    model = ResUNet(FILTER_LIST, input_channels=4, output_channels=3)
+    model = ResUNet(FILTER_LIST)
     preds = model(x)
     print(x.shape)
     print(preds.shape)

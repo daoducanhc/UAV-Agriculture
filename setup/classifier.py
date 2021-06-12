@@ -72,8 +72,11 @@ class WeedClassifier():
                 print('{} Loss:{:.7f}'.format(phase, epoch_loss))
                 if phase == 'valid' and last_loss > epoch_loss:
                     if last_loss != 1000:
-                        torch.save(self.model.state_dict(), name + '.pt')
-                        print('Saved')
+                        try:
+                            torch.save(self.model.state_dict(), name + '.pt')
+                            print('Saved')
+                        except:
+                            print('Error occur when save model!')
                     last_loss = epoch_loss
 
             end = time.time() - epoch_time
@@ -82,9 +85,12 @@ class WeedClassifier():
             print("Time {:.0f}m {:.0f}s".format(m, s))
 
         import json
-        history_file = open(name + '.json', "w")
-        json.dump(history, history_file)
-        history_file.close()
+        try:
+            history_file = open(name + '.json', "w")
+            json.dump(history, history_file)
+            history_file.close()
+        except:
+            print('Error occur when save history file!')
 
 
     def test(self, testLoader):
@@ -105,7 +111,7 @@ class WeedClassifier():
             else:
                 continue
 
-            image = data['image'].view((-1, 4, 512, 512)).to(self.device)
+            image = data['image'].view((-1, 3, 512, 512)).to(self.device)
             mask = data['mask']
 
             output = self.model(image).cpu()
@@ -172,7 +178,7 @@ class WeedClassifier():
         mask = data['mask']
         rgb = data['rgb']
 
-        image = image.view((-1, 4, 512, 512)).to(self.device)
+        image = image.view((-1, 3, 512, 512)).to(self.device)
 
         output = self.model(image)
         # score = self._dice_coefficient(output, mask)

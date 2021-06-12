@@ -14,7 +14,7 @@ TEST_DATASET_PATH = 'dataset/test'
 BATCH_SIZE = 16
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-print(device)
+print(device)   
 
 def sampler_indices(length):
     indices = list(range(length))
@@ -27,11 +27,13 @@ train_weed_dataset = dataset.WeedDataset(TRAIN_DATASET_PATH)
 test_weed_dataset = dataset.WeedDataset(TEST_DATASET_PATH)
 
 train_indices, valid_indices = sampler_indices(len(train_weed_dataset))
+test_indices = list(range(len(test_weed_dataset)))
 train_sampler, valid_sampler = SubsetRandomSampler(train_indices), SubsetRandomSampler(valid_indices)
+test_sampler = SubsetRandomSampler(test_indices)
 
-train_loader = torch.utils.data.DataLoader(weed_dataset, batch_size=BATCH_SIZE, sampler=train_sampler)
-valid_loader = torch.utils.data.DataLoader(weed_dataset, batch_size=BATCH_SIZE, sampler=valid_sampler)
-test_loader = torch.utils.data.DataLoader(test_weed_dataset, batch_size=1)
+train_loader = torch.utils.data.DataLoader(train_weed_dataset, batch_size=BATCH_SIZE, sampler=train_sampler)
+valid_loader = torch.utils.data.DataLoader(train_weed_dataset, batch_size=BATCH_SIZE, sampler=valid_sampler)
+test_loader = torch.utils.data.DataLoader(test_weed_dataset, batch_size=1, sampler=test_sampler)
 
 FILTER_LIST = [16,32,64,128,256]
 model = ResUNet.ResUNet(FILTER_LIST).to(device)

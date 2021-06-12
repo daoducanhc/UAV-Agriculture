@@ -9,24 +9,17 @@ from torch.utils.data import SubsetRandomSampler
 np.random.seed(0)
 torch.manual_seed(0)
 
-DATASET_PATH = 'dataset'
+TEST_DATASET_PATH = 'dataset/test'
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
 
-def sampler_indices(length):
-    indices = list(range(length))
-    np.random.shuffle(indices)
-    split = int(np.floor(0.1 * length))
-    test_indices = indices[:split]
-    return test_indices
+test_weed_dataset = dataset.WeedDataset(TEST_DATASET_PATH)
 
-tumor_dataset = dataset.WeedDataset(DATASET_PATH)
-
-test_indices = sampler_indices(len(tumor_dataset))
+test_indices = list(range(len(test_weed_dataset)))
 test_sampler = SubsetRandomSampler(test_indices)
 
-test_loader = torch.utils.data.DataLoader(tumor_dataset, batch_size=1, sampler=test_sampler)
+test_loader = torch.utils.data.DataLoader(test_weed_dataset, batch_size=1, sampler=test_sampler)
 
 FILTER_LIST = [16,32,64,128,256]
 
@@ -41,8 +34,5 @@ else:
 
 model.eval()
 score = classifier.test(test_loader)
-# print(f'\nDice Score {score}')
-# Dice Score 0.8537711366007329
-
 print(f'\n mIoU Score {score}')
 # mIoU Score 0.7995237626468983

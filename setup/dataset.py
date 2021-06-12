@@ -64,7 +64,7 @@ class WeedDataset(Dataset):
         return sample
 
 
-    def _random_transform(self, image, mask, rgb):
+    def _random_transform(self, image, mask):
         choice_list = list(self.random_transform)
         for _ in range(len(choice_list)):
             choice_key = random.choice(choice_list)
@@ -75,11 +75,9 @@ class WeedDataset(Dataset):
                     rotation = random.randint(15, 75)
                     image = self.random_transform[choice_key](image, rotation)
                     mask = self.random_transform[choice_key](mask, rotation)
-                    rgb = self.random_transform[choice_key](rgb, rotation)
                 else:
                     image = self.random_transform[choice_key](image)
                     mask = self.random_transform[choice_key](mask)
-                    rgb = self.random_transform[choice_key](rgb)
             choice_list.remove(choice_key)
 
-        return image, mask, rgb
+        return image, mask
