@@ -1,3 +1,1 @@
 # UAV-Agriculture
-
-https://doc-0k-3o-docs.googleusercontent.com/docs/securesc/8mpmari7ltit485llpskb4nqgfb07aj6/9j15m131hgviqj3lsq1v1m3m42qnfenh/1623489450000/01840427565189725005/01226500363740250735Z/1NblHBG9YcKbIBO8bG0YG3SseV6OM8BjW?e=download&nonce=6rlarns6hj6u2&user=01226500363740250735Z&hash=im3nhqe356mvbrea6cncvat9oujdcsrb
