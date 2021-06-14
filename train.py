@@ -11,7 +11,7 @@ torch.manual_seed(0)
 
 TRAIN_DATASET_PATH = 'dataset/train'
 TEST_DATASET_PATH = 'dataset/test'
-BATCH_SIZE = 16
+BATCH_SIZE = 2
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)   
@@ -41,7 +41,7 @@ name = 'outputs/ResUNet'
 classifier = classifier.WeedClassifier(model, device)
 
 model.train()
-history = classifier.train(train_loader, valid_loader, learning_rate=0.001, epochs=50, name=name)
+history = classifier.train(train_loader, valid_loader, learning_rate=0.001, epochs=5, name=name)
 
 model.eval()
 score = classifier.test(test_loader)

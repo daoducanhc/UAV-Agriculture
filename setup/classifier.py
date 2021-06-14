@@ -166,35 +166,23 @@ class WeedClassifier():
 
     def predict(self, data):
         self.model.eval()
-        # image = data['image'].numpy()
-        # mask = data['mask'].numpy()
-
-        # image_tensor = torch.Tensor(data['image'])
-        # output = self.model(image_tensor).detach().cpu()
-        # output = (output > threshold)
-        # output = output.numpy()
 
         image = data['image']
-        mask = data['mask']
         rgb = data['rgb']
 
         image = image.view((-1, 3, 512, 512)).to(self.device)
 
         output = self.model(image)
-        # score = self._dice_coefficient(output, mask)
-        score = self.miou(output, mask)
 
         # output = F.softmax(output, dim=1)
         output = torch.argmax(output, dim=1)
 
         # image = image.numpy()
         output = self.decode_segmap(output)
-        mask = self.decode_segmap(mask)
 
         # image = np.resize(image, (512, 512, 3))
-        mask = np.resize(mask, (512, 512, 3))
         output = np.resize(output, (512, 512, 3))
-        return rgb, mask, output, score
+        return rgb, output
 
     def decode_segmap(self, mask):
         mask = mask.detach().cpu().clone().numpy()
