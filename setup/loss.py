@@ -12,6 +12,7 @@ class DiceCELoss(nn.Module):
         # target's shape: batchsize, height, width
         # predicted's shape: batchsize, num_classes, height, width
 
+        target = target.type(torch.LongTensor).to('cuda')
         CE = F.cross_entropy(predicted, target)
 
         batch = predicted.size()[0]

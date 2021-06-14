@@ -35,4 +35,3 @@ else:
 model.eval()
 score = classifier.test(test_loader)
 print(f'\n mIoU Score {score}')
-# mIoU Score 0.7995237626468983
