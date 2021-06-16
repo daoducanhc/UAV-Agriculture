@@ -24,7 +24,7 @@ def sampler_indices(length):
     return train_indices, valid_indices
 
 train_weed_dataset = dataset.WeedDataset(TRAIN_DATASET_PATH)
-test_weed_dataset = dataset.WeedDataset(TEST_DATASET_PATH)
+test_weed_dataset = dataset.WeedDataset(TEST_DATASET_PATH, random_rotate=False)
 
 train_indices, valid_indices = sampler_indices(len(train_weed_dataset))
 test_indices = list(range(len(test_weed_dataset)))
@@ -41,8 +41,15 @@ name = 'outputs/ResUNet'
 classifier = classifier.WeedClassifier(model, device)
 
 model.train()
-history = classifier.train(train_loader, valid_loader, learning_rate=0.01, epochs=30, name=name)
+history = classifier.train(train_loader, valid_loader, learning_rate=0.001, epochs=25, name=name)
+
+# lr=0.001 ep=30 step=7 gamma=0.5   =>   score=0.6128
+# lr=0.001 ep=30 step=5 gamma=0.5   =>   score=0.5965
+# lr=0.001 ep=50 step=5 gamma=0.5   =>   score=0.5822
+# (new loss - no more cross entropy)
+# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.6145
+# lr=0.001 ep=30 step=7 gamma=0.4   =>   score=0.6139
 
 model.eval()
 score = classifier.test(test_loader)
-print(f'\mIoU Score {score}')
+print(f'mIoU Score {score}')

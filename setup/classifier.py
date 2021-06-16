@@ -32,7 +32,7 @@ class WeedClassifier():
         }
 
         self.optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
-        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=6, gamma=0.5)
+        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=7, gamma=0.5)
         print('Starting...')
 
         for epoch in range(epochs):
@@ -165,6 +165,29 @@ class WeedClassifier():
         return np.mean(coef_list)
 
     def predict(self, data):
+        self.model.eval()
+
+        image = data['image']
+        mask = data['mask']
+
+        image = image.view((-1, 3, 512, 512)).to(self.device)
+
+        output = self.model(image)
+
+        score = self.miou(output, mask)
+
+        # output = F.softmax(output, dim=1)
+        output = torch.argmax(output, dim=1)
+
+        # image = image.numpy()
+        mask = self.decode_segmap(mask)
+        output = self.decode_segmap(output)
+
+        # image = np.resize(image, (512, 512, 3))
+        output = np.resize(output, (512, 512, 3))
+        return mask, output, score
+
+    def predict_rgb(self, data):
         self.model.eval()
 
         image = data['image']

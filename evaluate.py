@@ -1,4 +1,5 @@
 import os
+from random import random
 import torch
 import numpy as np
 import setup.dataset as dataset
@@ -14,7 +15,7 @@ TEST_DATASET_PATH = 'dataset/test'
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
 
-test_weed_dataset = dataset.WeedDataset(TEST_DATASET_PATH)
+test_weed_dataset = dataset.WeedDataset(TEST_DATASET_PATH, random_rotate=False)
 
 test_indices = list(range(len(test_weed_dataset)))
 test_sampler = SubsetRandomSampler(test_indices)

@@ -37,7 +37,9 @@ class WeedDataset_RGB(Dataset):
         nir = transforms.Resize((512, 512))(nir)
         ndvi = transforms.Resize((512, 512))(ndvi)
 
+        rgb = rgb.convert("RGB")
         r,g,b = rgb.split()
+
         image = Image.merge('RGB', (r,nir,ndvi))
         # image = transforms.Resize((512, 512))(image)
 
