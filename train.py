@@ -11,10 +11,10 @@ torch.manual_seed(0)
 
 TRAIN_DATASET_PATH = 'dataset/train'
 TEST_DATASET_PATH = 'dataset/test'
-BATCH_SIZE = 12
+BATCH_SIZE = 6
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-print(device)   
+print(device)
 
 def sampler_indices(length):
     indices = list(range(length))
@@ -43,12 +43,25 @@ classifier = classifier.WeedClassifier(model, device)
 model.train()
 history = classifier.train(train_loader, valid_loader, learning_rate=0.001, epochs=25, name=name)
 
+# BATCH_SIZE = 6
+# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.3697
+
+# BATCH_SIZE = 8
+# ---------------old loss (cross entropy))
 # lr=0.001 ep=30 step=7 gamma=0.5   =>   score=0.6128
 # lr=0.001 ep=30 step=5 gamma=0.5   =>   score=0.5965
 # lr=0.001 ep=50 step=5 gamma=0.5   =>   score=0.5822
-# (new loss - no more cross entropy)
-# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.6145
-# lr=0.001 ep=30 step=7 gamma=0.4   =>   score=0.6139
+# ---------------old loss (cross entropy)
+
+# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.6278   ***
+# lr=0.001 ep=30 step=7 gamma=0.4   =>   score=0.5943
+
+# BATCH_SIZE = 25
+# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.5922
+# lr=0.001 ep=50 step=7 gamma=0.5   =>   score=0.5900
+
+# BATCH_SIZE = 12
+# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.613
 
 model.eval()
 score = classifier.test(test_loader)
