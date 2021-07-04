@@ -59,7 +59,7 @@ class ResUNet(nn.Module):
         self.up_conv4 = UpBlock(filters[3] + filters[4], filters[3])
         self.up_conv3 = UpBlock(filters[2] + filters[3], filters[2])
         self.up_conv2 = UpBlock(filters[1] + filters[2], filters[1])
-        self.up_conv1 = UpBlock(filters[1] + filters[0], filters[0])
+        self.up_conv1 = UpBlock(filters[0] + filters[1], filters[0])
 
         self.conv_last = nn.Conv2d(filters[0], output_channels, kernel_size=1)
 

@@ -53,7 +53,6 @@ history = classifier.train(train_loader, valid_loader, learning_rate=0.001, epoc
 # lr=0.001 ep=50 step=5 gamma=0.5   =>   score=0.5822
 # ---------------old loss (cross entropy)
 
-# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.7317   *** (F1)
 # lr=0.001 ep=30 step=7 gamma=0.4   =>   score=0.5943
 
 # BATCH_SIZE = 12
@@ -63,7 +62,17 @@ history = classifier.train(train_loader, valid_loader, learning_rate=0.001, epoc
 # lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.5922
 # lr=0.001 ep=50 step=7 gamma=0.5   =>   score=0.5900
 
-# F1
+### F1
+
+# BATCH_SIZE = 4, size (1024,1024)
+# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.7008
+
+# BATCH_SIZE = 8
+# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.7317 ***
+# one more layer 512                =>   score=0.6453
+
+# BATCH_SIZE = 10
+# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.7089
 
 # RED EQUALIZE 0.633
 # NIR EQUALIZE 0.678
