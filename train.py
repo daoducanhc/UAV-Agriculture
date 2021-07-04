@@ -11,7 +11,7 @@ torch.manual_seed(0)
 
 TRAIN_DATASET_PATH = 'dataset/train'
 TEST_DATASET_PATH = 'dataset/test'
-BATCH_SIZE = 6
+BATCH_SIZE = 8
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
@@ -53,16 +53,25 @@ history = classifier.train(train_loader, valid_loader, learning_rate=0.001, epoc
 # lr=0.001 ep=50 step=5 gamma=0.5   =>   score=0.5822
 # ---------------old loss (cross entropy)
 
-# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.6278   ***
+# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.7317   *** (F1)
 # lr=0.001 ep=30 step=7 gamma=0.4   =>   score=0.5943
+
+# BATCH_SIZE = 12
+# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.613
 
 # BATCH_SIZE = 25
 # lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.5922
 # lr=0.001 ep=50 step=7 gamma=0.5   =>   score=0.5900
 
-# BATCH_SIZE = 12
-# lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.613
+# F1
+
+# RED EQUALIZE 0.633
+# NIR EQUALIZE 0.678
+# NDVI EQUALIZE 0.6536
+# EQUALIZE ALL 0.5470
+
+# 2 channels: red & nir : 0.6315
 
 model.eval()
 score = classifier.test(test_loader)
-print(f'mIoU Score {score}')
+print(f'F1 Score {score}')

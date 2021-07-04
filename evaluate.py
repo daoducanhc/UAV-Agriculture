@@ -35,4 +35,4 @@ else:
 
 model.eval()
 score = classifier.test(test_loader)
-print(f'\n mIoU Score {score}')
+print(f'\n F1 Score {score}')

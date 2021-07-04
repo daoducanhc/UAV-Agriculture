@@ -4,7 +4,7 @@ import torchvision.transforms.functional as TF
 import random
 import torch
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageOps
 import os
 
 class WeedDataset(Dataset):
@@ -31,8 +31,11 @@ class WeedDataset(Dataset):
 
 
         red = Image.open(red_name)
+        # red = ImageOps.equalize(red, mask=None)
         nir = Image.open(nir_name)
+        # nir = ImageOps.equalize(nir, mask=None)
         ndvi = Image.open(ndvi_name)
+        # ndvi = ImageOps.equalize(ndvi, mask=None)
         mask = Image.open(mask_name)
 
         # nir =nir.crop((171, 93, 1060, 592))

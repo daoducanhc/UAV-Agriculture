@@ -116,8 +116,8 @@ class WeedClassifier():
 
             output = self.model(image).cpu()
 
-            # mean_val_score += self._dice_coefficient(output, mask)
-            mean_val_score += self.miou(output, mask)
+            mean_val_score += self._dice_coefficient(output, mask)
+            # mean_val_score += self.miou(output, mask)
 
         mean_val_score = mean_val_score / data_len
         return mean_val_score
@@ -174,7 +174,7 @@ class WeedClassifier():
 
         output = self.model(image)
 
-        score = self.miou(output, mask)
+        score = self._dice_coefficient(output, mask)
 
         # output = F.softmax(output, dim=1)
         output = torch.argmax(output, dim=1)
