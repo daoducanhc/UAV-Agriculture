@@ -9,7 +9,8 @@ from torch.utils.data import SubsetRandomSampler
 np.random.seed(0)
 torch.manual_seed(0)
 
-TRAIN_DATASET_PATH = 'dataset/train'
+# TRAIN_DATASET_PATH = 'dataset/train'
+TRAIN_DATASET_PATH = 'dataset_augmentation'
 TEST_DATASET_PATH = 'dataset/test'
 BATCH_SIZE = 8
 
