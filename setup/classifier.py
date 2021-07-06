@@ -18,7 +18,7 @@ class WeedClassifier():
         ])
 
 
-    def train(self, trainLoader, validLoader, learning_rate=0.001, epochs=20, name="state_dict_model"):
+    def train(self, trainLoader, validLoader, learning_rate=0.001, epochs=20, name="state_dict_model", testLoader):
         last_loss = 1000
 
         dataLoader = {
@@ -78,6 +78,9 @@ class WeedClassifier():
                         except:
                             print('Error occur when save model!')
                     last_loss = epoch_loss
+
+                score = self.test(testLoader)
+                print("F1 score: ", score)
 
             end = time.time() - epoch_time
             m = end//60
