@@ -30,11 +30,11 @@ class WeedDataset(Dataset):
         mask_name = os.path.join(self.root, 'mask', str(index)+'.png')
 
 
-        red = Image.open(red_name)
+        red = Image.open(red_name).convert('L')
         # red = ImageOps.equalize(red, mask=None)
-        nir = Image.open(nir_name)
+        nir = Image.open(nir_name).convert('L')
         # nir = ImageOps.equalize(nir, mask=None)
-        ndvi = Image.open(ndvi_name)
+        ndvi = Image.open(ndvi_name).convert('L')
         # ndvi = ImageOps.equalize(ndvi, mask=None)
         mask = Image.open(mask_name)
 
