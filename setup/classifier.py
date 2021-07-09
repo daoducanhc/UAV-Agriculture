@@ -5,6 +5,10 @@ from .loss import DiceCELoss
 import torch.optim as optim
 import numpy as np
 import time
+import sys
+
+np.random.seed(0)
+torch.manual_seed(0)
 
 class WeedClassifier():
     def __init__(self, model, device):
@@ -18,7 +22,7 @@ class WeedClassifier():
         ])
 
 
-    def train(self, trainLoader, validLoader, learning_rate=0.001, epochs=20, name="state_dict_model", testLoader):
+    def train(self, trainLoader, validLoader, learning_rate=0.001, epochs=20, name="state_dict_model"):
         last_loss = 1000
 
         dataLoader = {
@@ -36,6 +40,7 @@ class WeedClassifier():
         print('Starting...')
 
         for epoch in range(epochs):
+            sys.stdout = open("{}.txt".format(name), "a")
 
             print("\nEpoch {}/{}:".format(epoch+1, epochs))
             epoch_time = time.time()
@@ -79,14 +84,14 @@ class WeedClassifier():
                             print('Error occur when save model!')
                     last_loss = epoch_loss
 
-                score = self.test(testLoader)
-                print("F1 score: ", score)
+            print("F1 score: ", score)
 
             end = time.time() - epoch_time
             m = end//60
             s = end - m*60
             print("Time {:.0f}m {:.0f}s".format(m, s))
 
+        sys.stdout.close()
         import json
         try:
             history_file = open(name + '.json', "w")

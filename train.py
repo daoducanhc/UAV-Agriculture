@@ -42,7 +42,7 @@ name = 'outputs/ResUNet'
 classifier = classifier.WeedClassifier(model, device)
 
 model.train()
-history = classifier.train(train_loader, valid_loader, learning_rate=0.001, epochs=25, name=name, test_loader)
+history = classifier.train(train_loader, valid_loader, learning_rate=0.01, epochs=40, name=name)
 
 # BATCH_SIZE = 6
 # lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.3697
