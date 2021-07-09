@@ -38,11 +38,11 @@ test_loader = torch.utils.data.DataLoader(test_weed_dataset, batch_size=1, sampl
 
 FILTER_LIST = [16,32,64,128,256]
 model = ResUNet.ResUNet(FILTER_LIST).to(device)
-name = 'outputs/ResUNet'
+name = 'outputs/ResUNet_half_size'
 classifier = classifier.WeedClassifier(model, device)
 
 model.train()
-history = classifier.train(train_loader, valid_loader, learning_rate=0.01, epochs=40, name=name)
+history = classifier.train(train_loader, valid_loader, test_loader, learning_rate=0.001, epochs=40, name=name)
 
 # BATCH_SIZE = 6
 # lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.3697

@@ -22,8 +22,9 @@ class WeedClassifier():
         ])
 
 
-    def train(self, trainLoader, validLoader, learning_rate=0.001, epochs=20, name="state_dict_model"):
-        last_loss = 1000
+    def train(self, trainLoader, validLoader, testLoader, learning_rate=0.001, epochs=20, name="state_dict_model"):
+        # last_loss = 1000
+        last_score = 0
 
         dataLoader = {
             'train': trainLoader,
@@ -36,7 +37,7 @@ class WeedClassifier():
         }
 
         self.optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
-        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=7, gamma=0.5)
+        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=10, gamma=0.5)
         print('Starting...')
 
         for epoch in range(epochs):
@@ -75,15 +76,23 @@ class WeedClassifier():
                 history[phase].append(epoch_loss)
 
                 print('{} Loss:{:.7f}'.format(phase, epoch_loss))
-                if phase == 'valid' and last_loss > epoch_loss:
-                    if last_loss != 1000:
-                        try:
-                            torch.save(self.model.state_dict(), name + '.pt')
-                            print('Saved')
-                        except:
-                            print('Error occur when save model!')
-                    last_loss = epoch_loss
+                # if phase == 'valid' and last_loss > epoch_loss:
+                #     if last_loss != 1000:
+                #         try:
+                #             torch.save(self.model.state_dict(), name + '.pt')
+                #             print('Saved')
+                #         except:
+                #             print('Error occur when save model!')
+                #     last_loss = epoch_loss
 
+            score = self.test(testLoader)
+            if last_score < score:
+                try:
+                    torch.save(self.model.state_dict(), name + '.pt')
+                    print('Saved')
+                except:
+                    print('Error occur when save model!')
+                last_score = score
             print("F1 score: ", score)
 
             end = time.time() - epoch_time
@@ -119,7 +128,7 @@ class WeedClassifier():
             else:
                 continue
 
-            image = data['image'].view((-1, 3, 512, 512)).to(self.device)
+            image = data['image'].view((-1, 3, data['image'].shape[2], data['image'].shape[2])).to(self.device)
             mask = data['mask']
 
             output = self.model(image).cpu()
