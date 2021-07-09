@@ -19,6 +19,8 @@ class WeedDataset(Dataset):
             [0, 255, 0], # 1 for plants
             [255, 0, 0]    # 2 for weeds
         ])
+        self.tol_mean = [0.33940655, 0.42856702, 0.6518092]
+        self.tol_std = [0.16750395, 0.15230875, 0.1487584]
 
     def __len__(self):
         return len(os.listdir(os.path.join(self.root, 'mask')))
@@ -61,6 +63,7 @@ class WeedDataset(Dataset):
         result = torch.tensor(label_mask)
 
         image = TF.to_tensor(image)
+        # image = transforms.Normalize(self.tol_mean, self.tol_std)(image)
         # rgb = TF.to_tensor(rgb)
 
         sample = {'index': int(index), 'image': image, 'mask': result}
