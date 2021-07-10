@@ -4,6 +4,10 @@ import torch
 import numpy as np
 import setup.dataset as dataset
 import setup.ResUNet as ResUNet
+import setup.UNet as UNet
+import setup.CNN as CNN
+import setup.HSCNN as HSCNN
+import setup.DeepLabV3 as DeepLabV3
 import setup.classifier as classifier
 from torch.utils.data import SubsetRandomSampler
 
@@ -24,8 +28,9 @@ test_loader = torch.utils.data.DataLoader(test_weed_dataset, batch_size=1, sampl
 
 FILTER_LIST = [16,32,64,128,256]
 
-model = ResUNet.ResUNet(FILTER_LIST).to(device)
-path = 'outputs/ResUNet.pt'
+# model = UNet.UNet(FILTER_LIST).to(device)
+model = DeepLabV3.DeepLabV3().to(device)
+path = 'outputs/DeepLabV3.pt'
 
 classifier = classifier.WeedClassifier(model, device)
 if str(device) == 'cpu':

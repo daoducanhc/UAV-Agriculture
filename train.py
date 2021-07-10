@@ -3,6 +3,10 @@ import torch
 import numpy as np
 import setup.dataset as dataset
 import setup.ResUNet as ResUNet
+import setup.UNet as UNet
+import setup.CNN as CNN
+import setup.HSCNN as HSCNN
+import setup.DeepLabV3 as DeepLabV3
 import setup.classifier as classifier
 from torch.utils.data import SubsetRandomSampler
 
@@ -12,7 +16,7 @@ torch.manual_seed(0)
 # TRAIN_DATASET_PATH = 'dataset/train'
 TRAIN_DATASET_PATH = 'dataset_augmentation'
 TEST_DATASET_PATH = 'dataset/test'
-BATCH_SIZE = 8
+BATCH_SIZE = 2
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
@@ -37,12 +41,13 @@ valid_loader = torch.utils.data.DataLoader(train_weed_dataset, batch_size=BATCH_
 test_loader = torch.utils.data.DataLoader(test_weed_dataset, batch_size=1, sampler=test_sampler)
 
 FILTER_LIST = [16,32,64,128,256]
-model = ResUNet.ResUNet(FILTER_LIST).to(device)
-name = 'outputs/ResUNet_half_size'
+# model = ResUNet.ResUNet(FILTER_LIST).to(device)
+model = DeepLabV3.DeepLabV3().to(device)
+name = 'outputs/DeepLabV3'
 classifier = classifier.WeedClassifier(model, device)
 
 model.train()
-history = classifier.train(train_loader, valid_loader, test_loader, learning_rate=0.001, epochs=40, name=name)
+history = classifier.train(train_loader, valid_loader, test_loader, learning_rate=0.003, epochs=40, name=name)
 
 # BATCH_SIZE = 6
 # lr=0.001 ep=25 step=7 gamma=0.5   =>   score=0.3697
