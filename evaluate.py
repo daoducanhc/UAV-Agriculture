@@ -28,9 +28,9 @@ test_loader = torch.utils.data.DataLoader(test_weed_dataset, batch_size=1, sampl
 
 FILTER_LIST = [16,32,64,128,256]
 
-# model = UNet.UNet(FILTER_LIST).to(device)
-model = DeepLabV3.DeepLabV3().to(device)
-path = 'outputs/DeepLabV3.pt'
+model = UNet.UNet(FILTER_LIST).to(device)
+# model = DeepLabV3.DeepLabV3().to(device)
+path = 'outputs/UNet_original_dataset.pt'
 
 classifier = classifier.WeedClassifier(model, device)
 if str(device) == 'cpu':
@@ -38,6 +38,5 @@ if str(device) == 'cpu':
 else:
     classifier.model.load_state_dict(torch.load(path))
 
-model.eval()
 score = classifier.test(test_loader)
 print(f'\n F1 Score {score}')
