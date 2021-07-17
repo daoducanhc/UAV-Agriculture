@@ -37,7 +37,7 @@ class WeedClassifier():
         }
 
         self.optimizer = optim.Adam(self.model.parameters(), lr=learning_rate)
-        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=5, gamma=0.5)
+        self.scheduler = torch.optim.lr_scheduler.StepLR(self.optimizer, step_size=10, gamma=0.5)
         print('Starting...')
 
         for epoch in range(epochs):
@@ -187,7 +187,7 @@ class WeedClassifier():
         image = data['image']
         mask = data['mask']
 
-        image = image.view((-1, 3, 512, 512)).to(self.device)
+        image = image.view((-1, 3, data['image'].shape[2], data['image'].shape[2])).to(self.device)
 
         output = self.model(image)
 
@@ -200,8 +200,8 @@ class WeedClassifier():
         mask = self.decode_segmap(mask)
         output = self.decode_segmap(output)
 
-        # image = np.resize(image, (512, 512, 3))
-        output = np.resize(output, (512, 512, 3))
+        # image = np.resize(image, (data['image'].shape[2], data['image'].shape[2], 3))
+        output = np.resize(output, (data['image'].shape[2], data['image'].shape[2], 3))
         return mask, output, score
 
     def predict_rgb(self, data):
@@ -210,7 +210,7 @@ class WeedClassifier():
         image = data['image']
         rgb = data['rgb']
 
-        image = image.view((-1, 3, 512, 512)).to(self.device)
+        image = image.view((-1, 3, data['image'].shape[2], data['image'].shape[2])).to(self.device)
 
         output = self.model(image)
 
@@ -220,14 +220,13 @@ class WeedClassifier():
         # image = image.numpy()
         output = self.decode_segmap(output)
 
-        # image = np.resize(image, (512, 512, 3))
-        output = np.resize(output, (512, 512, 3))
+        # image = np.resize(image, (data['image'].shape[2], data['image'].shape[2], 3))
+        output = np.resize(output, (data['image'].shape[2], data['image'].shape[2], 3))
         return rgb, output
 
     def decode_segmap(self, mask):
         mask = mask.detach().cpu().clone().numpy()
-        # mask = mask.numpy()
-        mask = np.resize(mask, (512, 512))
+        mask = np.squeeze(mask)
         r = mask.copy()
         g = mask.copy()
         b = mask.copy()

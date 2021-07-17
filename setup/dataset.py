@@ -7,10 +7,17 @@ import numpy as np
 from PIL import Image, ImageOps
 import os
 
+def tensor_to_PIL(tensor):
+    image = tensor.cpu().clone()
+    image = image.squeeze(0)
+    image = transforms.ToPILImage()(image)
+    return image
+
 class WeedDataset(Dataset):
-    def __init__(self, root, random_rotate=True):
+    def __init__(self, root, random_rotate=True, size=256):
         self.root = root
         self.random_rotate = random_rotate
+        self.size = size
         self.random_transform = {'hflip': TF.hflip,
                                 'vflip': TF.vflip,
                                 'rotate': TF.rotate}
@@ -31,7 +38,6 @@ class WeedDataset(Dataset):
         ndvi_name = os.path.join(self.root, 'ndvi', str(index)+'.png')
         mask_name = os.path.join(self.root, 'mask', str(index)+'.png')
 
-
         red = Image.open(red_name).convert('L')
         # red = ImageOps.equalize(red, mask=None)
         nir = Image.open(nir_name).convert('L')
@@ -42,14 +48,24 @@ class WeedDataset(Dataset):
 
         # nir =nir.crop((171, 93, 1060, 592))
 
-        red = transforms.Resize((512, 512))(red)
-        nir = transforms.Resize((512, 512))(nir)
-        ndvi = transforms.Resize((512, 512))(ndvi)
-        mask = transforms.Resize((512, 512))(mask)
+        # red = TF.to_tensor(red)
+        # crop = transforms.RandomCrop((self.size,self.size)).get_params(red, (self.size,self.size))
+        # red = tensor_to_PIL(red)
+        # x = crop[0] if crop[0]+self.size < 1464 else 0
+        # y = crop[1] if crop[1]+self.size < 1008 else 0
+        # red = red.crop((x, y, x+self.size, y+self.size))
+        # nir = nir.crop((x, y, x+self.size, y+self.size))
+        # ndvi = ndvi.crop((x, y, x+self.size, y+self.size))
+        # mask = mask.crop((x, y, x+self.size, y+self.size))
+
+        red = transforms.Resize((self.size, self.size))(red)
+        nir = transforms.Resize((self.size, self.size))(nir)
+        ndvi = transforms.Resize((self.size, self.size))(ndvi)
+        mask = transforms.Resize((self.size, self.size))(mask)
 
         # r,g,b = rgb.split()
         image = Image.merge('RGB', (red,nir,ndvi))
-        # image = transforms.Resize((512, 512))(image)
+        # image = transforms.Resize((self.size, self.size))(image)
 
         if self.random_rotate==True:
             image, mask = self._random_transform(image, mask)
