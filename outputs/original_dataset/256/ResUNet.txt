@@ -1,0 +1,249 @@
+
+Epoch 1/40:
+train Loss:0.2010216
+valid Loss:0.2009296
+Saved
+F1 score:  0.3484022410721702
+Time 0m 22s
+
+Epoch 2/40:
+train Loss:0.2005721
+valid Loss:0.2004603
+Saved
+F1 score:  0.4027665604212078
+Time 0m 21s
+
+Epoch 3/40:
+train Loss:0.2004372
+valid Loss:0.2004204
+F1 score:  0.3842643244307814
+Time 0m 21s
+
+Epoch 4/40:
+train Loss:0.2004343
+valid Loss:0.2005164
+F1 score:  0.31996186568188595
+Time 0m 21s
+
+Epoch 5/40:
+train Loss:0.2003603
+valid Loss:0.2004600
+F1 score:  0.368539467080071
+Time 0m 21s
+
+Epoch 6/40:
+train Loss:0.2003810
+valid Loss:0.2003357
+F1 score:  0.3951456551878026
+Time 0m 21s
+
+Epoch 7/40:
+train Loss:0.2003301
+valid Loss:0.2003123
+Saved
+F1 score:  0.40678855544310877
+Time 0m 20s
+
+Epoch 8/40:
+train Loss:0.2003283
+valid Loss:0.2002908
+F1 score:  0.40171496876152624
+Time 0m 21s
+
+Epoch 9/40:
+train Loss:0.2003162
+valid Loss:0.2003230
+Saved
+F1 score:  0.4111029788094598
+Time 0m 21s
+
+Epoch 10/40:
+train Loss:0.2002752
+valid Loss:0.2003135
+F1 score:  0.4096608278330313
+Time 0m 21s
+
+Epoch 11/40:
+train Loss:0.2002862
+valid Loss:0.2003179
+F1 score:  0.3869667869817292
+Time 0m 20s
+
+Epoch 12/40:
+train Loss:0.2002979
+valid Loss:0.2002699
+F1 score:  0.40211479941131606
+Time 0m 22s
+
+Epoch 13/40:
+train Loss:0.2002702
+valid Loss:0.2002482
+F1 score:  0.4016264541737804
+Time 0m 21s
+
+Epoch 14/40:
+train Loss:0.2002548
+valid Loss:0.2002640
+Saved
+F1 score:  0.4256901132039699
+Time 0m 21s
+
+Epoch 15/40:
+train Loss:0.2002577
+valid Loss:0.2002170
+Saved
+F1 score:  0.4707631795821292
+Time 0m 21s
+
+Epoch 16/40:
+train Loss:0.2002424
+valid Loss:0.2002500
+Saved
+F1 score:  0.4982339498840634
+Time 0m 21s
+
+Epoch 17/40:
+train Loss:0.2002325
+valid Loss:0.2002503
+F1 score:  0.413969704430386
+Time 0m 21s
+
+Epoch 18/40:
+train Loss:0.2002191
+valid Loss:0.2001879
+Saved
+F1 score:  0.5406569031237799
+Time 0m 22s
+
+Epoch 19/40:
+train Loss:0.2002227
+valid Loss:0.2001947
+F1 score:  0.455971673126507
+Time 0m 22s
+
+Epoch 20/40:
+train Loss:0.2002276
+valid Loss:0.2002069
+F1 score:  0.525470260808173
+Time 0m 21s
+
+Epoch 21/40:
+train Loss:0.2002003
+valid Loss:0.2001962
+Saved
+F1 score:  0.6749476541261791
+Time 0m 21s
+
+Epoch 22/40:
+train Loss:0.2001972
+valid Loss:0.2001551
+F1 score:  0.6326227441933039
+Time 0m 20s
+
+Epoch 23/40:
+train Loss:0.2002021
+valid Loss:0.2001847
+F1 score:  0.5755969849622878
+Time 0m 21s
+
+Epoch 24/40:
+train Loss:0.2002059
+valid Loss:0.2001759
+F1 score:  0.5261202326722111
+Time 0m 21s
+
+Epoch 25/40:
+train Loss:0.2002133
+valid Loss:0.2001777
+F1 score:  0.5748238716384082
+Time 0m 22s
+
+Epoch 26/40:
+train Loss:0.2001966
+valid Loss:0.2001649
+F1 score:  0.47975404632029917
+Time 0m 21s
+
+Epoch 27/40:
+train Loss:0.2001969
+valid Loss:0.2001737
+F1 score:  0.5306729652506091
+Time 0m 20s
+
+Epoch 28/40:
+train Loss:0.2001881
+valid Loss:0.2001709
+F1 score:  0.5361786400692085
+Time 0m 22s
+
+Epoch 29/40:
+train Loss:0.2001901
+valid Loss:0.2001607
+F1 score:  0.46489034762150094
+Time 0m 21s
+
+Epoch 30/40:
+train Loss:0.2001998
+valid Loss:0.2001759
+F1 score:  0.4966583270064006
+Time 0m 21s
+
+Epoch 31/40:
+train Loss:0.2002047
+valid Loss:0.2001784
+F1 score:  0.5870829205778266
+Time 0m 22s
+
+Epoch 32/40:
+train Loss:0.2001975
+valid Loss:0.2001673
+F1 score:  0.5149483582085241
+Time 0m 22s
+
+Epoch 33/40:
+train Loss:0.2001918
+valid Loss:0.2001671
+F1 score:  0.5964602358871391
+Time 0m 23s
+
+Epoch 34/40:
+train Loss:0.2001862
+valid Loss:0.2001590
+F1 score:  0.5473895859525895
+Time 0m 23s
+
+Epoch 35/40:
+train Loss:0.2001874
+valid Loss:0.2001541
+F1 score:  0.5338130381818261
+Time 0m 22s
+
+Epoch 36/40:
+train Loss:0.2001850
+valid Loss:0.2001549
+F1 score:  0.5418783051695589
+Time 0m 20s
+
+Epoch 37/40:
+train Loss:0.2001775
+valid Loss:0.2001458
+F1 score:  0.5344720516206931
+Time 0m 20s
+
+Epoch 38/40:
+train Loss:0.2001748
+valid Loss:0.2001493
+F1 score:  0.5558474070398981
+Time 0m 20s
+
+Epoch 39/40:
+train Loss:0.2001731
+valid Loss:0.2001628
+F1 score:  0.556474409760452
+Time 0m 20s
+
+Epoch 40/40:
+train Loss:0.2001775
+valid Loss:0.2001467
+F1 score:  0.5554993450344897
+Time 0m 20s
