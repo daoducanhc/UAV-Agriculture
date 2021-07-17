@@ -45,7 +45,7 @@ class DoubleConv(nn.Module):
         return self.double_conv(x)
 
 class ResUNet(nn.Module):
-    def __init__(self, filters, input_channels=3, output_channels=3):
+    def __init__(self, filters=[16,32,64,128,256], input_channels=3, output_channels=3):
         super(ResUNet, self).__init__()
         if len(filters) != 5:
             raise Exception("Filter list size {s}, expected 5!".format(len(filters)))
@@ -88,7 +88,7 @@ def test():
     preds = model(x)
     print(x.shape)
     print(preds.shape)
-    # print(preds)
+    print(preds)
 
 if __name__ == "__main__":
     test()

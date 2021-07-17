@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 class UNet(nn.Module):
-    def __init__(self, filters, input_channels=3, output_channels=3):
+    def __init__(self, filters=[16,32,64,128,256], input_channels=3, output_channels=3):
         super(UNet, self).__init__()
 
         if len(filters) != 5:
