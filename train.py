@@ -14,14 +14,14 @@ from torch.utils.data import SubsetRandomSampler
 np.random.seed(0)
 torch.manual_seed(0)
 
-TRAIN_DATASET_PATH = 'dataset/train'
-name = 'outputs/original_dataset/'
+# TRAIN_DATASET_PATH = 'dataset/train'
+# name = 'outputs/original_dataset/'
 
-# TRAIN_DATASET_PATH = 'dataset_augmentation'
-# name = 'outputs/augmentation_dataset/'
+TRAIN_DATASET_PATH = 'dataset_augmentation'
+name = 'outputs/augmentation_dataset/'
 
 TEST_DATASET_PATH = 'dataset/test'
-BATCH_SIZE = 3
+BATCH_SIZE = 4
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
@@ -45,13 +45,10 @@ train_loader = torch.utils.data.DataLoader(train_weed_dataset, batch_size=BATCH_
 valid_loader = torch.utils.data.DataLoader(train_weed_dataset, batch_size=BATCH_SIZE, sampler=valid_sampler)
 test_loader = torch.utils.data.DataLoader(test_weed_dataset, batch_size=1, sampler=test_sampler)
 
-model = DeepLabV3.DeepLabV3().to(device)
-name = name + '256/DeepLabV3'
+model = ResUNet.ResUNet().to(device)
+name = name + '512/ResUNet'
 classifier = classifier.WeedClassifier(model, device)
-
-model.train()
 history = classifier.train(train_loader, valid_loader, test_loader, learning_rate=0.001, epochs=40, name=name)
 
-model.eval()
 score = classifier.test(test_loader)
 print(f'F1 Score {score}')

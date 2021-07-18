@@ -27,8 +27,8 @@ test_sampler = SubsetRandomSampler(test_indices)
 
 test_loader = torch.utils.data.DataLoader(test_weed_dataset, batch_size=1, sampler=test_sampler)
 
-model = ResUNet.ResUNet().to(device)
-path = 'outputs/original_dataset/256/ResUNet.pt'
+model = HSCNN.HSCNN().to(device)
+path = 'outputs/augmentation_dataset/256/HSCNN.pt'
 
 classifier = classifier.WeedClassifier(model, device)
 if str(device) == 'cpu':

@@ -14,7 +14,7 @@ def tensor_to_PIL(tensor):
     return image
 
 class WeedDataset(Dataset):
-    def __init__(self, root, random_rotate=True, size=256):
+    def __init__(self, root, random_rotate=True, size=512):
         self.root = root
         self.random_rotate = random_rotate
         self.size = size
