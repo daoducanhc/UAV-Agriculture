@@ -4,6 +4,8 @@
 __pycache__/
 /.ipynb_checkpoints
 /dataset_augmentation
+
+### SegNet models is too big
 outputs/augmentation_dataset/512/SegNet.pt
 outputs/augmentation_dataset/256/SegNet.pt
 outputs/original_dataset/512/SegNet.pt
