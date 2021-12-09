@@ -185,24 +185,24 @@ class WeedClassifier():
         self.model.eval()
 
         image = data['image']
-        mask = data['mask']
+        # mask = data['mask']
 
         image = image.view((-1, 3, data['image'].shape[2], data['image'].shape[2])).to(self.device)
 
         output = self.model(image)
 
-        score = self._dice_coefficient(output, mask)
+        # score = self._dice_coefficient(output, mask)
 
         # output = F.softmax(output, dim=1)
         output = torch.argmax(output, dim=1)
 
         # image = image.numpy()
-        mask = self.decode_segmap(mask)
+        # mask = self.decode_segmap(mask)
         output = self.decode_segmap(output)
 
         # image = np.resize(image, (data['image'].shape[2], data['image'].shape[2], 3))
         output = np.resize(output, (data['image'].shape[2], data['image'].shape[2], 3))
-        return mask, output, score
+        return output
 
     def predict_rgb(self, data):
         self.model.eval()
