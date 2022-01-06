@@ -36,7 +36,7 @@ class WeedDataset(Dataset):
         red_name = os.path.join(self.root, 'red', str(index)+'.png')
         nir_name = os.path.join(self.root, 'nir', str(index)+'.png')
         ndvi_name = os.path.join(self.root, 'ndvi', str(index)+'.png')
-        # mask_name = os.path.join(self.root, 'mask', str(index)+'.png')
+        mask_name = os.path.join(self.root, 'mask', str(index)+'.png')
 
         red = Image.open(red_name).convert('L')
         # red = ImageOps.equalize(red, mask=None)
@@ -44,7 +44,7 @@ class WeedDataset(Dataset):
         # nir = ImageOps.equalize(nir, mask=None)
         ndvi = Image.open(ndvi_name).convert('L')
         # ndvi = ImageOps.equalize(ndvi, mask=None)
-        # mask = Image.open(mask_name)
+        mask = Image.open(mask_name)
 
         # nir =nir.crop((171, 93, 1060, 592))
 
@@ -61,22 +61,22 @@ class WeedDataset(Dataset):
         red = transforms.Resize((self.size, self.size))(red)
         nir = transforms.Resize((self.size, self.size))(nir)
         ndvi = transforms.Resize((self.size, self.size))(ndvi)
-        # mask = transforms.Resize((self.size, self.size))(mask)
+        mask = transforms.Resize((self.size, self.size))(mask)
 
         # r,g,b = rgb.split()
         image = Image.merge('RGB', (red,nir,ndvi))
         # image = transforms.Resize((self.size, self.size))(image)
 
-        # if self.random_rotate==True:
-        #     image, mask = self._random_transform(image, mask)
+        if self.random_rotate==True:
+            image, mask = self._random_transform(image, mask)
 
-        # mask = np.array(mask)
-        # mask = mask.astype(int)
-        # label_mask = np.zeros((mask.shape[0], mask.shape[1]), dtype=np.int16)
-        # for ii, label in enumerate(self.lb_arr):
-        #     label_mask[np.where(np.all(mask == label, axis=-1))[:2]] = ii
-        # label_mask = label_mask.astype(int)
-        # result = torch.tensor(label_mask)
+        mask = np.array(mask)
+        mask = mask.astype(int)
+        label_mask = np.zeros((mask.shape[0], mask.shape[1]), dtype=np.int16)
+        for ii, label in enumerate(self.lb_arr):
+            label_mask[np.where(np.all(mask == label, axis=-1))[:2]] = ii
+        label_mask = label_mask.astype(int)
+        result = torch.tensor(label_mask)
 
         image = TF.to_tensor(image)
         nir = Image.open(nir_name).convert('RGB')
@@ -85,7 +85,7 @@ class WeedDataset(Dataset):
         # image = transforms.Normalize(self.tol_mean, self.tol_std)(image)
         # rgb = TF.to_tensor(rgb)
 
-        sample = {'index': int(index), 'image': image, 'nir': nir}
+        sample = {'index': int(index), 'image': image, 'mask': result}
         return sample
 
 

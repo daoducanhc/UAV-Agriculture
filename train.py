@@ -17,11 +17,11 @@ torch.manual_seed(0)
 # TRAIN_DATASET_PATH = 'dataset/train'
 # name = 'outputs/original_dataset/'
 
-TRAIN_DATASET_PATH = 'dataset_augmentation'
-name = 'outputs/augmentation_dataset/'
+TRAIN_DATASET_PATH = 'dataset/train'
+name = 'outputs/'
 
 TEST_DATASET_PATH = 'dataset/test'
-BATCH_SIZE = 4
+BATCH_SIZE = 1
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(device)
@@ -29,7 +29,7 @@ print(device)
 def sampler_indices(length):
     indices = list(range(length))
     np.random.shuffle(indices)
-    index = int(np.floor(0.1 * length))
+    index = int(np.floor(0.5 * length))
     valid_indices, train_indices = indices[:index], indices[index:]
     return train_indices, valid_indices
 
@@ -46,9 +46,9 @@ valid_loader = torch.utils.data.DataLoader(train_weed_dataset, batch_size=BATCH_
 test_loader = torch.utils.data.DataLoader(test_weed_dataset, batch_size=1, sampler=test_sampler)
 
 model = ResUNet.ResUNet().to(device)
-name = name + '512/ResUNet'
+name = name + 'ResUNet'
 classifier = classifier.WeedClassifier(model, device)
-history = classifier.train(train_loader, valid_loader, test_loader, learning_rate=0.001, epochs=40, name=name)
+history = classifier.train(train_loader, valid_loader, test_loader, learning_rate=0.001, epochs=100, name=name)
 
 score = classifier.test(test_loader)
 print(f'F1 Score {score}')

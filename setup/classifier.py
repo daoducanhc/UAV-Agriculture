@@ -41,8 +41,6 @@ class WeedClassifier():
         print('Starting...')
 
         for epoch in range(epochs):
-            sys.stdout = open("{}.txt".format(name), "a")
-
             print("\nEpoch {}/{}:".format(epoch+1, epochs))
             epoch_time = time.time()
 
@@ -100,7 +98,6 @@ class WeedClassifier():
             s = end - m*60
             print("Time {:.0f}m {:.0f}s".format(m, s))
 
-        sys.stdout.close()
         import json
         try:
             history_file = open(name + '.json', "w")
@@ -185,24 +182,24 @@ class WeedClassifier():
         self.model.eval()
 
         image = data['image']
-        # mask = data['mask']
+        mask = data['mask']
 
         image = image.view((-1, 3, data['image'].shape[2], data['image'].shape[2])).to(self.device)
 
         output = self.model(image)
 
-        # score = self._dice_coefficient(output, mask)
+        score = self._dice_coefficient(output, mask)
 
-        # output = F.softmax(output, dim=1)
+        output = F.softmax(output, dim=1)
         output = torch.argmax(output, dim=1)
 
         # image = image.numpy()
-        # mask = self.decode_segmap(mask)
+        mask = self.decode_segmap(mask)
         output = self.decode_segmap(output)
 
         # image = np.resize(image, (data['image'].shape[2], data['image'].shape[2], 3))
         output = np.resize(output, (data['image'].shape[2], data['image'].shape[2], 3))
-        return output
+        return output, mask, score
 
     def predict_rgb(self, data):
         self.model.eval()
